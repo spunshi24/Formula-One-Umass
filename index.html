@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formula One UMass</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+            background: #000;
+            color: #fff;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23dc0000" width="1200" height="800"/><path fill="%23000" d="M0 400 Q300 300 600 400 T1200 400 L1200 800 L0 800 Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 88vh;
+            padding: 80px 20px;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 900px;
+        }
+
+        .hero-logo {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 18px 35px rgba(0, 0, 0, 0.6));
+        }
+
+        .hero-logo svg {
+            width: clamp(160px, 22vw, 260px);
+            height: auto;
+        }
+
+        .hero-logo text {
+            font-family: 'Orbitron', 'BankGothic', 'Eurostile', sans-serif;
+            letter-spacing: 6px;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(48px, 8vw, 120px);
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, #dc0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: clamp(18px, 3vw, 28px);
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+            color: #f0f0f0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: #dc0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #dc0000;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(220, 0, 0, 0.5);
+        }
+
+        @media (max-width: 600px) {
+            #hero {
+                min-height: 78vh;
+                padding: 60px 20px;
+            }
+        }
+
+        /* Content Sections */
+        .content-section {
+            background: #fff;
+            color: #000;
+        }
+
+        .section-container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 40px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 72px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-size: clamp(16px, 2vw, 22px);
+            color: #666;
+            margin-bottom: 60px;
+            font-weight: 400;
+        }
+
+        .section-text {
+            font-size: clamp(18px, 2vw, 24px);
+            line-height: 1.6;
+            font-weight: 300;
+            max-width: 800px;
+            color: #333;
+        }
+
+        /* Event Cards */
+        .event-card {
+            background: #f8f8f8;
+            border-radius: 20px;
+            padding: 60px;
+            margin-bottom: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .event-title {
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #dc0000;
+        }
+
+        .event-details {
+            font-size: clamp(16px, 2vw, 20px);
+            margin-bottom: 15px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .event-description {
+            font-size: clamp(16px, 2vw, 20px);
+            line-height: 1.7;
+            color: #444;
+            margin-top: 30px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #28a745;
+            color: #fff;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        /* E-Board Carousel */
+        .eboard-carousel {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .eboard-card-container {
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .eboard-card {
+            display: none;
+            background: #fff;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+
+        .eboard-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .eboard-info {
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .eboard-name {
+            font-size: 36px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .eboard-role {
+            font-size: 24px;
+            font-weight: 700;
+            color: #dc0000;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .carousel-btn {
+            background: #dc0000;
+            color: #fff;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 36px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .carousel-btn:hover {
+            background: #a00000;
+            transform: scale(1.1);
+        }
+
+        .carousel-btn:active {
+            transform: scale(0.95);
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: #dc0000;
+            width: 40px;
+            border-radius: 6px;
+        }
+
+        /* Social Section */
+        #social {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23dc0000" width="1200" height="800"/><path fill="%23000" d="M0 400 Q300 300 600 400 T1200 400 L1200 800 L0 800 Z"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 150px 20px;
+        }
+
+        .social-content {
+            text-align: center;
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .community-highlight {
+            position: relative;
+            margin: 0 auto 90px;
+            padding: 50px 40px;
+            border-radius: 32px;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+        }
+
+        .community-highlight::before {
+            content: '';
+            position: absolute;
+            inset: -30% 25% 60% -25%;
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.35), transparent 55%);
+            opacity: 0.7;
+            transform: rotate(-8deg);
+        }
+
+        .community-highlight::after {
+            content: '';
+            position: absolute;
+            inset: 60% -20% -30% 30%;
+            background: radial-gradient(circle at bottom, rgba(220, 0, 0, 0.55), transparent 65%);
+            opacity: 0.6;
+        }
+
+        .community-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .community-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 6px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 20px;
+        }
+
+        .community-label::before,
+        .community-label::after {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        .community-title {
+            font-size: clamp(28px, 5vw, 56px);
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .community-description {
+            font-size: clamp(18px, 2.5vw, 22px);
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 35px;
+        }
+
+        .community-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .community-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 26px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .social-content h2 {
+            font-size: clamp(36px, 5vw, 64px);
+            margin-bottom: 60px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: inline-block;
+            padding: 20px 50px;
+            background: #fff;
+            color: #dc0000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: 2px solid #fff;
+        }
+
+        .social-link:hover {
+            background: transparent;
+            color: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 255, 255, 0.3);
+        }
+
+        .social-contact {
+            margin-top: 90px;
+            font-size: clamp(22px, 4vw, 32px);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 4px;
+        }
+
+        .social-contact a {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 3px solid #dc0000;
+            padding-bottom: 6px;
+        }
+
+        .social-contact a:hover {
+            color: #dc0000;
+        }
+
+        @media (max-width: 768px) {
+            .event-card {
+                padding: 40px 30px;
+            }
+            
+            .section-container {
+                padding: 0 20px;
+            }
+
+            .eboard-carousel {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .carousel-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 28px;
+            }
+
+            .eboard-info {
+                padding: 30px 20px;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .community-highlight {
+                padding: 40px 28px;
+                margin-bottom: 70px;
+            }
+
+            .community-label {
+                letter-spacing: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-content">
+            <div class="hero-logo" aria-hidden="true">
+                <svg viewBox="0 0 300 300" role="img" aria-labelledby="logoTitle logoDesc">
+                    <title id="logoTitle">Formula One UMass Retro Logo</title>
+                    <desc id="logoDesc">Retro-inspired racing wheel logo for the Formula One UMass homepage.</desc>
+                    <defs>
+                        <radialGradient id="wheelGradient" cx="50%" cy="50%" r="60%">
+                            <stop offset="0%" stop-color="#f1efeb" />
+                            <stop offset="55%" stop-color="#cbc7c0" />
+                            <stop offset="100%" stop-color="#a7a39c" />
+                        </radialGradient>
+                    </defs>
+                    <circle cx="150" cy="150" r="140" fill="#050505" />
+                    <g fill="none" stroke-linecap="round">
+                        <path d="M 75 78 A 120 120 0 0 1 225 78" stroke="#c40000" stroke-width="16" />
+                        <path d="M 225 222 A 120 120 0 0 1 75 222" stroke="#c40000" stroke-width="16" />
+                    </g>
+                    <circle cx="150" cy="150" r="104" fill="#101010" />
+                    <circle cx="150" cy="150" r="92" fill="url(#wheelGradient)" stroke="#e8e6e1" stroke-width="4" />
+                    <circle cx="150" cy="150" r="76" fill="#beb9b1" />
+                    <circle cx="150" cy="150" r="62" fill="none" stroke="#dcd8d0" stroke-width="12" stroke-dasharray="18 22" stroke-linecap="round" />
+                    <circle cx="150" cy="150" r="38" fill="#f8f7f5" stroke="#b0aba3" stroke-width="4" />
+                    <circle cx="150" cy="150" r="18" fill="#e7e2db" stroke="#c40000" stroke-width="5" />
+                    <text x="150" y="70" text-anchor="middle" fill="#c40000" font-size="30" font-weight="700">UMASS</text>
+                    <text x="150" y="252" text-anchor="middle" fill="#c40000" font-size="36" font-weight="700">F1</text>
+                    <text x="150" y="156" text-anchor="middle" fill="#000" font-size="14" font-weight="600">est. 2023</text>
+                </svg>
+            </div>
+            <h1>FORMULA ONE UMASS</h1>
+            <p>University of Massachusetts Amherst</p>
+        </div>
+    </section>
+
+    <!-- E-Racing Events -->
+    <section class="content-section">
+        <div class="section-container">
+            <h2 class="section-title">E-Racing Championship</h2>
+            <p class="section-subtitle">Logitech G923 & GTLite Racing Chair</p>
+            <div class="event-card">
+                <div class="event-title">🎮 Round 1</div>
+                <div class="event-details">📅 Sept. 24 | 7-9pm</div>
+                <div class="event-details">📍 Campus Center 804-808</div>
+                <div class="event-description">
+                    Round 1 brought intense competition as racers battled on the virtual circuit. The championship is heating up with incredible lap times and fierce rivalries forming!
+                </div>
+                <span class="status-badge">✓ COMPLETED</span>
+            </div>
+
+            <div class="event-card">
+                <div class="event-title">🎮 Round 2</div>
+                <div class="event-details">📅 Oct. 8 | 7-9pm</div>
+                <div class="event-details">📍 Campus Center 803</div>
+                <div class="event-description">
+                    The championship intensifies as we continue our journey to the finals. Every position matters, every second counts. Will you rise to the challenge?
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-title">🎮 Round 3</div>
+                <div class="event-details">📅 Nov. 5 | 7-9pm</div>
+                <div class="event-details">📍 Campus Center 804-808</div>
+                <div class="event-description">
+                    The championship intensifies as we approach the final rounds. Every position matters, every second counts. Will you rise to the top?
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-title">🏆 Championship Final</div>
+                <div class="event-details">📅 Dec. 3 | 7-9pm</div>
+                <div class="event-details">📍 Campus Center 168C</div>
+                <div class="event-description">
+                    The ultimate showdown. The season culminates in an epic finale where champions are crowned. Who will stand on the top step of the podium? Podium Finishers Rewarded.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grand Prix Events -->
+    <section class="content-section">
+        <div class="section-container">
+            <h2 class="section-title">Grand Prix Series</h2>
+            
+            <div class="event-card">
+                <div class="event-title">🇺🇸 Texas GP</div>
+                <div class="event-details">📅 Oct. 19 | 3pm</div>
+                <div class="event-details">📍 Student Union 405</div>
+                <div class="event-description">
+                    Experience the excitement of the Texas Grand Prix! Join fellow F1 fans for live race viewing, race analysis, and authentic racing atmosphere. Cheer for your favorite drivers and teams as they battle it out on the Circuit of the Americas.
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-title">🇲🇽 Mexico GP</div>
+                <div class="event-details">📅 Oct. 26 | 4pm</div>
+                <div class="event-details">📍 Campus Center 162-175</div>
+                <div class="event-description">
+                    High altitude, high stakes! Watch as drivers push their machines to the limit at the legendary Autódromo Hermanos Rodríguez. One of the most passionate crowds in F1. Experience it with us!
+                </div>
+            </div>
+
+            <div class="event-card">
+                <div class="event-title">🇧🇷 Brazil GP</div>
+                <div class="event-details">📅 Nov. 9 | 12pm</div>
+                <div class="event-details">📍 Campus Center 162-175</div>
+                <div class="event-description">
+                    The iconic Interlagos circuit awaits! Known for dramatic weather, incredible overtakes, and championship-defining moments. Don't miss this historic race with the F1 UMass community.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Minutemen Grand Prix (RC Event) -->
+    <section class="content-section">
+        <div class="section-container">
+            <h2 class="section-title">Lights Out and Away We Go</h2>
+            <p class="section-subtitle">25mph average speed through UMass Amherst | 1/12th Scale Cars</p>
+            <div class="event-card">
+                <div class="event-title">🏁 Minutemen Grand Prix</div>
+                <div class="event-details">📅 October (TBA)</div>
+                <div class="event-details">📅 November (TBA)</div>
+                <div class="event-description">
+                    The ultimate RC racing experience! Teams of 2-3 will pilot high-speed RC cars around a custom circuit across UMass Amherst campus. Compete for the fastest lap time, master the corners, and prove your team has what it takes to reach the podium. Strategy, precision, and teamwork are essential as you navigate the track in pursuit of glory. Podium finishers will be rewarded with prizes and eternal bragging rights!
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- E-Board Section -->
+    <section class="content-section">
+        <div class="section-container">
+            <h2 class="section-title">The Leadership</h2>
+            
+            <div class="eboard-carousel">
+                <button class="carousel-btn prev" onclick="prevSlide()">‹</button>
+                
+                <div class="eboard-card-container">
+                    <div class="eboard-card active">
+                        <div class="eboard-info">
+                            <h3 class="eboard-name">Sumit</h3>
+                            <p class="eboard-role">PRESIDENT</p>
+                        </div>
+                    </div>
+
+                    <div class="eboard-card">
+                        <div class="eboard-info">
+                            <h3 class="eboard-name">Hamza</h3>
+                            <p class="eboard-role">VICE PRESIDENT</p>
+                        </div>
+                    </div>
+
+                    <div class="eboard-card">
+                        <div class="eboard-info">
+                            <h3 class="eboard-name">Ella & Shresht</h3>
+                            <p class="eboard-role">MARKETING</p>
+                        </div>
+                    </div>
+
+                    <div class="eboard-card">
+                        <div class="eboard-info">
+                            <h3 class="eboard-name">Sebastián & Tyler</h3>
+                            <p class="eboard-role">TREASURER</p>
+                        </div>
+                    </div>
+
+                    <div class="eboard-card">
+                        <div class="eboard-info">
+                            <h3 class="eboard-name">Jessica & Refan</h3>
+                            <p class="eboard-role">EVENTS COORDINATOR</p>
+                        </div>
+                    </div>
+
+                    <div class="eboard-card">
+                        <div class="eboard-info">
+                            <h3 class="eboard-name">Chantelle & Gabby</h3>
+                            <p class="eboard-role">PR TEAM</p>
+                        </div>
+                    </div>
+
+                    <div class="eboard-card">
+                        <div class="eboard-info">
+                            <h3 class="eboard-name">Thomas</h3>
+                            <p class="eboard-role">SECRETARY</p>
+                        </div>
+                    </div>
+
+                    <div class="eboard-card">
+                        <div class="eboard-info">
+                            <h3 class="eboard-name">Shreshth & Dev</h3>
+                            <p class="eboard-role">CLUB REPRESENTATIVES</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-btn next" onclick="nextSlide()">›</button>
+            </div>
+
+            <div class="carousel-dots">
+                <span class="dot active" onclick="goToSlide(0)"></span>
+                <span class="dot" onclick="goToSlide(1)"></span>
+                <span class="dot" onclick="goToSlide(2)"></span>
+                <span class="dot" onclick="goToSlide(3)"></span>
+                <span class="dot" onclick="goToSlide(4)"></span>
+                <span class="dot" onclick="goToSlide(5)"></span>
+                <span class="dot" onclick="goToSlide(6)"></span>
+                <span class="dot" onclick="goToSlide(7)"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Section -->
+    <section id="social">
+        <div class="social-content">
+            <h2>Follow The Action</h2>
+            <div class="social-buttons">
+                <a href="https://linktr.ee/f1.umass" target="_blank" class="social-link">Linktree</a>
+                <a href="https://www.instagram.com/f1.umass/" target="_blank" class="social-link">Instagram</a>
+            </div>
+            <div class="community-highlight">
+                <div class="community-inner">
+                    <span class="community-label">The Community</span>
+                    <h3 class="community-title">Where Speed Meets Family</h3>
+                    <p class="community-description">
+                        Formula One UMass is more than just a club. It's a passionate community of racing enthusiasts, competitive spirits, and students who live for the thrill of speed. We bring the excitement of Formula 1 racing to campus through Grand Prix watch parties, immersive e-racing championships, and unforgettable experiences that unite fans across UMass Amherst.
+                    </p>
+                    <div class="community-pills">
+                        <span class="community-pill">Grand Prix Nights</span>
+                        <span class="community-pill">E-Racing Battles</span>
+                        <span class="community-pill">Campus Takeovers</span>
+                        <span class="community-pill">Podium Moments</span>
+                    </div>
+                </div>
+            </div>
+            <p class="social-contact">CONTACT US · <a href="mailto:f1-rso@umass.edu">f1-rso@umass.edu</a></p>
+        </div>
+    </section>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.eboard-card');
+        const dots = document.querySelectorAll('.dot');
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            if (n >= slides.length) currentSlide = 0;
+            if (n < 0) currentSlide = slides.length - 1;
+            
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        function goToSlide(n) {
+            currentSlide = n;
+            showSlide(currentSlide);
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Parallax effect for hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.getElementById('hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
